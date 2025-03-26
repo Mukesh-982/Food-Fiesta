@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 
 const RestaurantContainer = () => {
@@ -74,7 +75,10 @@ const RestaurantContainer = () => {
       <div className="flex flex-wrap justify-evenly">
           {
             filteredRestaurants.map((restaurant)=>(
-              <RestaurantCard key={restaurant.info.id} resData = {restaurant}/>
+              <Link to = {`/restaurant/${restaurant.info.id}`} key={restaurant.info.id}>
+                  <RestaurantCard resData = {restaurant}/>
+              </Link>
+              
             ))
           }   
       </div>

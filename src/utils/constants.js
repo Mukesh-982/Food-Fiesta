@@ -6,3 +6,5 @@ export const LOGO_URL = "https://img.freepik.com/premium-vector/food-logo-design
 
 export const ERROR_PAGE = "https://blog.thomasnet.com/hubfs/shutterstock_774749455.jpg";
 
+export const MENU_URL = "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=16.3066525&lng=80.4365402&restaurantId=";
+
