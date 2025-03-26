@@ -71,7 +71,7 @@ const RestaurantContainer = () => {
         </div>
       </div>
       
-      <div className="flex flex-wrap justify-between">
+      <div className="flex flex-wrap justify-evenly">
           {
             filteredRestaurants.map((restaurant)=>(
               <RestaurantCard key={restaurant.info.id} resData = {restaurant}/>
