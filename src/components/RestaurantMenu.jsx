@@ -1,27 +1,16 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom';
 import Shimmer from './Shimmer';
 import { resImage } from '../utils/constants';
-import { MENU_URL } from '../utils/constants';
+import useRestuarantMenu from '../utils/useRestaurantMenu';
 
 
 const RestaurantMenu = () => {
 
-    const [resInfo, setResInfo] = useState(null);
+    
     const {resId} = useParams();
-    //console.log(resId);
-
-    const fetchMenu = async ()=>{
-        const menuData = await fetch(MENU_URL+resId);
-        const menuJson = await menuData.json();
-
-        console.log(menuJson);
-        setResInfo(menuJson.data);
-    }
-
-    useEffect(()=>{
-        fetchMenu();
-    }, []);
+    
+    const resInfo = useRestuarantMenu(resId);
 
     if(resInfo === null){
         return <Shimmer/>
@@ -29,10 +18,10 @@ const RestaurantMenu = () => {
 
     //restaurant name and remaining stuff
     const {name,cuisines,costForTwoMessage,avgRatingString, totalRatingsString} = resInfo?.cards[2]?.card?.card?.info;
-    const {slaString} = resInfo?.cards[2]?.card?.card?.info.sla;
+    const {slaString} = resInfo?.cards?.[2]?.card?.card?.info.sla;
 
     //restaurant menu - (recommended)
-    const {itemCards} = resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card;
+    const itemCards = resInfo?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.itemCards || resInfo?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.itemCards || [];
     //console.log(itemCards);
 
 
@@ -62,7 +51,7 @@ const RestaurantMenu = () => {
             {/* Map over items in menu */}
             <div className="flex flex-col items-center">
                 {
-                    itemCards.length >= 0 ? (
+                    itemCards?.length > 0 ? (
                         itemCards.map((item)=>(
                             <div key = {item?.card?.info?.id} className="w-full max-w-3xl flex justify-between items-start p-4 border-b border-gray-300 drop-shadow-2xl rounded-lg mb-2">
                                 {/* Left Side - Text */}
@@ -77,7 +66,7 @@ const RestaurantMenu = () => {
                                 <div className="w-28 h-28 relative">
                                     <img
                                         className="w-full h-full rounded-lg object-cover shadow-sm"
-                                        src={resImage+item?.card?.info?.imageId}
+                                        src={resImage + (item?.card?.info?.imageId ?? item?.card?.info?.boltImageId ?? "fallback-image.jpg")}
                                         alt="Dish image"
                                     />
                                     <button className="absolute -bottom-3.5 left-1/2 transform -translate-x-1/2 bg-white border border-green-600 text-green-600 font-bold text-sm px-4 py-1 rounded-lg shadow-md hover:bg-green-600 hover:text-white">

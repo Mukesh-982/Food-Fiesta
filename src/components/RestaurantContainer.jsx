@@ -1,45 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, {useState} from "react";
 import RestaurantCard from "./RestaurantCard";
+import useRestaurants from "../utils/useRestaurants";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 
 
 const RestaurantContainer = () => {
-  const [listOfRestaurants, setListOfRestaurants] = useState([]);
-  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+
+  const {listOfRestaurants, filteredRestaurants, setFilteredRestaurants, isLoading} = useRestaurants();
   const [searchText, setSearchText] = useState("");
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    
-    try {
-        const response = await fetch(
-            "https://www.swiggy.com/dapi/restaurants/list/v5?lat=16.3066525&lng=80.4365402&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-        );
-
-        if(!response.ok){
-            throw new Error("Failed to fetch data");
-        }
-
-        const jsonData = await response.json();
-
-        //optional chaining
-        const restaurants = jsonData?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
-        //console.log(restaurants);
-        setListOfRestaurants(restaurants);
-        setFilteredRestaurants(restaurants);
-
-    } catch (error) {
-        console.log(error);
-    }
-  };
-
-
-   
-  return (listOfRestaurants.length === 0) ? <Shimmer/> : (
+  if(isLoading){
+    return <Shimmer/>;
+  }
+  
+  
+  return (
     <div className="">
       <div className="flex items-center gap-10 ">
         <div>
