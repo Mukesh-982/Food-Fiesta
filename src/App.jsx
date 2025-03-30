@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {lazy, Suspense} from 'react'
 import Header from './components/Header'
 import RestaurantContainer from './components/RestaurantContainer'
 import AboutUs from './pages/AboutUs'
@@ -7,6 +7,16 @@ import Cart from './pages/Cart'
 import PageNotFound from './pages/PageNotFound'
 import RestaurantMenu from './components/RestaurantMenu'
 import {Routes, Route} from "react-router-dom";
+import Shimmer from './components/Shimmer'
+
+
+//Chunking
+//Code splitting
+// Dynamic Bundling
+// Lazy loading - on demand loading
+
+
+const Grocery = lazy(()=> import('./pages/Grocery'));
 
 const App = () => {
     return (
@@ -17,6 +27,11 @@ const App = () => {
           <Route path='/about' element = {<AboutUs/>}/>
           <Route path='/contact' element = { <Contact/> }/>
           <Route path='/cart' element = { <Cart/> }/>
+          <Route path='/grocery' element = { 
+            <Suspense fallback= {<Shimmer/>}>
+              <Grocery/>
+            </Suspense>
+            }/>
           <Route path='/restaurant/:resId' element = { <RestaurantMenu/> }/>
           <Route path= '*' element = { <PageNotFound/>}/>
         </Routes>

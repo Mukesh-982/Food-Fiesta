@@ -69,7 +69,7 @@ const RestaurantMenu = () => {
                                         src={resImage + (item?.card?.info?.imageId ?? item?.card?.info?.boltImageId ?? "fallback-image.jpg")}
                                         alt="Dish image"
                                     />
-                                    <button className="absolute -bottom-3.5 left-1/2 transform -translate-x-1/2 bg-white border border-green-600 text-green-600 font-bold text-sm px-4 py-1 rounded-lg shadow-md hover:bg-green-600 hover:text-white">
+                                    <button className="absolute -bottom-3.5 left-1/2 transform -translate-x-1/2 bg-white border border-green-600 text-green-600 font-bold text-sm px-4 py-1 rounded-lg shadow-md hover:bg-green-600 hover:text-white cursor-pointer">
                                         ADD
                                     </button>
                                 </div>

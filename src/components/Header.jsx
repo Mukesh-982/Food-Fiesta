@@ -18,6 +18,7 @@ const Header = () => {
                     <Link to = '/about' className='cursor-pointer hover:text-gray-500'>About us</Link>
                     <Link to = "/contact" className='cursor-pointer hover:text-gray-500'>Contact</Link>
                     <Link to = "/cart" className='cursor-pointer hover:text-gray-500'>Cart</Link>
+                    <Link to = "/grocery" className='cursor-pointer hover:text-gray-500'>Grocery</Link>
                     <button onClick={()=>{
                         btnName === "Login" ? setBtnName("Logout") : setBtnName("Login")
                     }} 

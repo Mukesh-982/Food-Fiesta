@@ -1,6 +1,7 @@
 import React, {useState} from "react";
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, {withDiscountLabel} from "./RestaurantCard";
 import useRestaurants from "../utils/useRestaurants";
+import useOnlineStatus from "../utils/useOnlineStatus";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 
@@ -8,12 +9,20 @@ import { Link } from "react-router-dom";
 const RestaurantContainer = () => {
 
   const {listOfRestaurants, filteredRestaurants, setFilteredRestaurants, isLoading} = useRestaurants();
+  const onlineStatus = useOnlineStatus();
   const [searchText, setSearchText] = useState("");
+
+  const RestaurantCardDiscount = withDiscountLabel(RestaurantCard);
 
   if(isLoading){
     return <Shimmer/>;
   }
   
+  if(onlineStatus === false){
+    return (
+      alert("You are offline. Please check your internet connection!")
+    );
+  }
   
   return (
     <div className="">
@@ -52,7 +61,13 @@ const RestaurantContainer = () => {
           {
             filteredRestaurants.map((restaurant)=>(
               <Link to = {`/restaurant/${restaurant.info.id}`} key={restaurant.info.id}>
-                  <RestaurantCard resData = {restaurant}/>
+                  {
+                    restaurant.info?.aggregatedDiscountInfoV3 &&
+                    Object.keys(restaurant.info?.aggregatedDiscountInfoV3).length > 0 ? 
+                    (<RestaurantCardDiscount resData = {restaurant}/>) : 
+                    (<RestaurantCard resData = {restaurant}/>)           
+                  }
+                  
               </Link>
               
             ))
