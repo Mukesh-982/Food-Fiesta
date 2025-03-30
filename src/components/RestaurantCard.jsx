@@ -3,7 +3,7 @@ import { resImage } from '../utils/constants';
 
 const RestaurantCard = ({ resData }) => {
     return (
-        <div className='max-w-xs rounded-lg shadow-md bg-white overflow-hidden m-2 p-2.5 cursor-pointer transform transition-transform duration-300 relative hover:scale-95 hover:z-10'>
+        <div className='max-w-xs rounded-lg shadow-md bg-white overflow-hidden m-2 p-2.5 cursor-pointer transform transition-transform duration-300 relative hover:scale-105'>
             <div className="relative">
                 <img className='w-full object-cover rounded-lg' src={resImage + resData.info.cloudinaryImageId} alt="Dish Image" />
             </div>
@@ -29,11 +29,11 @@ export const withDiscountLabel = (RestaurantCard) => {
             : null;
 
         return (
-            <div className='relative hover:scale-100 hover:z-10 transition-transform duration-300'>
+            <div className='relative  transition-transform duration-300'>
                 <div className='relative'>
                     <RestaurantCard resData={resData} />
                     {discountInfo && (
-                        <div className="absolute top-2 left-4 right-0 text-white  text-lg font-extrabold py-1.5 px-2">
+                        <div className="absolute top-3 left-6 right-0 text-white text-lg font-extrabold py-1.5 px-2">
                             {discountInfo}
                         </div>
                     )}
